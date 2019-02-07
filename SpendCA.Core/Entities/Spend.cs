@@ -1,8 +1,7 @@
-using System;
-
-namespace SpendCA.Models
+﻿using System;
+namespace SpendCA.Core.Entities
 {
-    public class Spend : Base
+    public class Spend : BaseEntity
     {
         public string Description { get; set; }
         public string Location { get; set; }
@@ -10,6 +9,5 @@ namespace SpendCA.Models
         public DateTime Date { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-
     }
 }

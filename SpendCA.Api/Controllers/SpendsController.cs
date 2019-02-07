@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SpendCA.Models;
-using SpendCA.Interfaces;
+using SpendCA.Core.Entities;
+using SpendCA.Core.Exceptions;
 using Microsoft.AspNetCore.Authorization;
+using SpendCA.Core.Interfaces;
 
 namespace SpendCA.Api.Controllers
 {
@@ -16,17 +15,18 @@ namespace SpendCA.Api.Controllers
     public class SpendsController : ControllerBase
     {
 
-        private readonly ISpendService _spendService;
-        public SpendsController(ISpendService spendsService)
+        private readonly ISpendRepository _spendRepository;
+
+        public SpendsController(ISpendRepository spendRepository)
         {
-            _spendService = spendsService;
+            _spendRepository = spendRepository;
         }
 
         // GET api/spends
         [HttpGet]
         public ActionResult<IList<Spend>> Get()
         {
-            return _spendService.GetAll(GetUserId());
+            return _spendRepository.GetAll(GetUserId());
         }
 
         // POST api/values
@@ -38,7 +38,7 @@ namespace SpendCA.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _spendService.Add(spend);
+            _spendRepository.Add(spend);
 
             return CreatedAtAction("GetItem", new { id = spend.Id }, spend);
         }
@@ -52,7 +52,7 @@ namespace SpendCA.Api.Controllers
             if (!ModelState.IsValid) 
                 return BadRequest(ModelState);
 
-            _spendService.Update(spend, GetUserId());
+            _spendRepository.Update(spend, GetUserId());
 
             return NoContent();
 
@@ -60,18 +60,18 @@ namespace SpendCA.Api.Controllers
 
         public Spend GetItem(int id)
         {
-            return _spendService.GetItem(id);
+            return _spendRepository.GetItem(id);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Spend> DeleteSpend(int id){
             try
             {
-                return _spendService.Delete(id, GetUserId());
+                return _spendRepository.Delete(id, GetUserId());
             }
-            catch (System.Exception error)
+            catch (ItemNotFoundException ex)
             {
-                return NotFound(error.Message);
+                return NotFound(ex.Message);
             }
         }
         private int GetUserId()

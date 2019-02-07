@@ -1,14 +1,12 @@
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace SpendCA.Models
+namespace SpendCA.Core.Entities
 {
-    public class Base
+    public class BaseEntity
     {
         public int Id { get; set; }
 
         [Required]
         public int UserId { get; set; }
-
     }
 }
