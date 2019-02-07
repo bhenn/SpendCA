@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SpendCA.Api.Migrations
+namespace SpendCA.Infrastructure.Migrations
 {
-    public partial class First : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,7 +42,8 @@ namespace SpendCA.Api.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -178,7 +179,8 @@ namespace SpendCA.Api.Migrations
                     UserId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Location = table.Column<string>(nullable: true),
-                    Value = table.Column<decimal>(nullable: false),
+                    Value = table.Column<long>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

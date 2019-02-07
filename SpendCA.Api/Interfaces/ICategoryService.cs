@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using SpendCA.Models;
+using SpendCA.Core.Entities;
 
 public interface ICategoryService
 {

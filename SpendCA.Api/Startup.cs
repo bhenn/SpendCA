@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using SpendCA.Interfaces;
-using SpendCA.Services;
-using SpendCA.Models;
+using SpendCA.Core.Interfaces;
+using SpendCA.Infrastructure.Data;
+using SpendCA.Core.Entities;
+using SpendCA.Infrastructure.Data.Entities;
 
 namespace SpendCA.Api
 {
@@ -38,10 +33,12 @@ namespace SpendCA.Api
 
             var connection = Configuration.GetConnectionString("DefaultConnection");
             
-            services.AddDbContext<Context>(options => options.UseSqlServer(connection));
+            services.AddDbContext<Context>(options => options.UseSqlServer(
+                connection
+            ));
 
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ISpendService, SpendsService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ISpendRepository, SpendRepository>();
 
 
             // ===== Add Identity ========

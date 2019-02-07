@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SpendCA.Models;
+using SpendCA.Infrastructure.Data.Entities;
 
 namespace SpendCA.Api.Controllers
 {

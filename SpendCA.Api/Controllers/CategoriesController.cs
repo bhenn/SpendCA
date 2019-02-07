@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SpendCA.Interfaces;
-using SpendCA.Models;
-using SpendCA.Services;
+using SpendCA.Core.Entities;
+using SpendCA.Core.Interfaces;
+using SpendCA.Core.Exceptions;
 
 namespace SpendCA.Api.Controllers
 {
@@ -16,12 +14,12 @@ namespace SpendCA.Api.Controllers
     [Authorize]
     public class CategoriesController : ControllerBase
     {
+    
+        private readonly ICategoryRepository _categoryRepository; 
 
-        private readonly ICategoryService _categoryService;
-
-        public CategoriesController(ICategoryService categoryService)
+        public CategoriesController(ICategoryRepository categoryRepository)
         {
-            _categoryService = categoryService;
+            _categoryRepository = categoryRepository;
         }
 
         [HttpGet("ping")]
@@ -36,7 +34,7 @@ namespace SpendCA.Api.Controllers
         {
             var userId = GetUserId();
 
-            return _categoryService.GetAll(userId);
+            return _categoryRepository.GetAll(userId);
 
         }
 
@@ -44,12 +42,15 @@ namespace SpendCA.Api.Controllers
         [HttpGet("{id}")]
         public ActionResult<Category> GetItem(int id)
         {
-            var category = _categoryService.GetItem(id);
+            try
+            {
+                return _categoryRepository.GetItem(id);
+            }
+            catch (ItemNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
 
-            if (category == null)
-                return NotFound();
-
-            return category;
         }
 
         // POST api/categories
@@ -62,7 +63,7 @@ namespace SpendCA.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _categoryService.Add(category);
+            _categoryRepository.Add(category);
 
             return CreatedAtAction("GetItem", new { id = category.Id }, category);
         }
