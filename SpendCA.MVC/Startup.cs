@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SpendCA.Core.Interfaces;
 using SpendCA.Infrastructure.Data;
 using SpendCA.Infrastructure.Data.Entities;
 
@@ -42,6 +43,10 @@ namespace SpendCA.MVC
             services.AddDbContext<Context>(options => options.UseSqlServer(
                 connection
             ));
+
+            // Repositories
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ISpendRepository, SpendRepository>();
 
             // ===== Add Identity ========
             //services.AddDefaultIdentity<User>()

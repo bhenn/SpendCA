@@ -1,0 +1,28 @@
+﻿@using SpendCA.Core.Entities
+@model List<Category>
+
+
+<h1>Categories</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h4>Description</h4>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @*<a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

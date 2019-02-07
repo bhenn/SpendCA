@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Account\" />
+    <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpendCA.Infrastructure\SpendCA.Infrastructure.csproj" />
