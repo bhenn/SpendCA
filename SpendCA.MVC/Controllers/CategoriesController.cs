@@ -8,12 +8,12 @@ namespace SpendCA.MVC.Controllers
 {
 
     [Authorize]
-    public class CategoryController : Controller
+    public class CategoriesController : Controller
     {
 
         private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryController(ICategoryRepository categoryRepository)
+        public CategoriesController(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
