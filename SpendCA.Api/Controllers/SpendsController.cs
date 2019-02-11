@@ -15,18 +15,18 @@ namespace SpendCA.Api.Controllers
     public class SpendsController : ControllerBase
     {
 
-        private readonly ISpendRepository _spendRepository;
+        private readonly ISpendService _spendService;
 
-        public SpendsController(ISpendRepository spendRepository)
+        public SpendsController(ISpendService spendService)
         {
-            _spendRepository = spendRepository;
+            _spendService = spendService;
         }
 
         // GET api/spends
         [HttpGet]
         public ActionResult<IList<Spend>> Get()
         {
-            return _spendRepository.GetAll(GetUserId());
+            return _spendService.GetAll(GetUserId());
         }
 
         // POST api/values
@@ -38,7 +38,7 @@ namespace SpendCA.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _spendRepository.Add(spend);
+            _spendService.Add(spend);
 
             return CreatedAtAction("GetItem", new { id = spend.Id }, spend);
         }
@@ -52,7 +52,7 @@ namespace SpendCA.Api.Controllers
             if (!ModelState.IsValid) 
                 return BadRequest(ModelState);
 
-            _spendRepository.Update(spend, GetUserId());
+            _spendService.Update(spend, GetUserId());
 
             return NoContent();
 
@@ -60,14 +60,14 @@ namespace SpendCA.Api.Controllers
 
         public Spend GetItem(int id)
         {
-            return _spendRepository.GetItem(id);
+            return _spendService.GetItem(id);
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Spend> DeleteSpend(int id){
             try
             {
-                return _spendRepository.Delete(id, GetUserId());
+                return _spendService.Delete(id, GetUserId());
             }
             catch (ItemNotFoundException ex)
             {

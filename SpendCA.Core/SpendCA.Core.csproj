@@ -8,10 +8,9 @@
     <Folder Include="Entities\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Services\CategoryService.cs" />
-    <Compile Remove="Services\SpendService.cs" />
-    <Compile Remove="Interfaces\ISpendService.cs" />
   </ItemGroup>
 </Project>

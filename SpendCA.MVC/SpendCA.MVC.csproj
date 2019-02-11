@@ -11,4 +11,13 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Account\" />
+    <Folder Include="Views\Categories\" />
+    <Folder Include="Views\Spends\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SpendCA.Infrastructure\SpendCA.Infrastructure.csproj" />
+    <ProjectReference Include="..\SpendCA.Core\SpendCA.Core.csproj" />
+  </ItemGroup>
 </Project>

@@ -1,18 +1,18 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using SpendCA.Core.Interfaces;
+using SpendCA.Core.Services;
 using SpendCA.Infrastructure.Data;
-using SpendCA.Core.Entities;
 using SpendCA.Infrastructure.Data.Entities;
 
 namespace SpendCA.Api
@@ -37,8 +37,11 @@ namespace SpendCA.Api
                 connection
             ));
 
+
+            // Repositories / Services
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ISpendRepository, SpendRepository>();
+            services.AddScoped<ISpendService, SpendService>();
 
 
             // ===== Add Identity ========

@@ -1,0 +1,55 @@
+﻿@using SpendCA.Core.Entities
+@model List<Spend>
+
+
+<h1>Spends</h1>
+
+<a asp-action="Create" asp-controller="Spends">Create</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h4>Date</h4>
+            </th>
+            <th>
+                <h4>Value</h4>
+            </th>
+            <th>
+                <h4>Description</h4>
+            </th>
+            <th>
+                <h4>Location</h4>
+            </th>
+            <th>
+                <h4>Category</h4>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Description)
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-controller="Spends" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
