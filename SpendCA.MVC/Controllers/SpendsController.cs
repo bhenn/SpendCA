@@ -1,33 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpendCA.Core.Entities;
 using SpendCA.Core.Interfaces;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SpendCA.MVC.Controllers
 {
     [Authorize]
     public class SpendsController : Controller
     {
-        private readonly ISpendRepository _spendsRepository;
+        private readonly ISpendService _spendService;
         private readonly ICategoryRepository _categoryRepository;
 
-        public SpendsController(ISpendRepository spendRepository, ICategoryRepository categoryRepository)
+        public SpendsController(ISpendService spendService, ICategoryRepository categoryRepository)
         {
-            _spendsRepository = spendRepository;
+            _spendService = spendService;
             _categoryRepository = categoryRepository;
         }
 
         public IActionResult Index()
         {
 
-            var spends = _spendsRepository.GetAll(GetUserId());
+            var spends = _spendService.GetAll(GetUserId());
 
             return View(spends);
         }
@@ -47,7 +42,7 @@ namespace SpendCA.MVC.Controllers
             if (ModelState.IsValid){
 
                 spend.UserId = GetUserId();
-                _spendsRepository.Add(spend);
+                _spendService.Add(spend);
 
                 return RedirectToAction("Index");
             }
@@ -62,7 +57,7 @@ namespace SpendCA.MVC.Controllers
             if (id == null)
                 return NotFound();
 
-            _spendsRepository.Delete((int)id, GetUserId());
+            _spendService.Delete((int)id, GetUserId());
 
             return RedirectToAction("Index");
         }

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SpendCA.Core.Interfaces;
 using SpendCA.Infrastructure.Data;
 using SpendCA.Infrastructure.Data.Entities;
+using SpendCA.Core.Services;
 
 namespace SpendCA.MVC
 {
@@ -44,15 +40,12 @@ namespace SpendCA.MVC
                 connection
             ));
 
-            // Repositories
+            // Repositories / Services
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ISpendRepository, SpendRepository>();
+            services.AddScoped<ISpendService, SpendService>();
 
             // ===== Add Identity ========
-            //services.AddDefaultIdentity<User>()
-            //.AddDefaultUI(UIFramework.Bootstrap4)
-            //.AddEntityFrameworkStores<Context>();
-
             services.AddIdentity<User, IdentityRole<int>>()
                 .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();
