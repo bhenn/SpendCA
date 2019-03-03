@@ -4,6 +4,7 @@ using SpendCA.Core.Interfaces;
 using SpendCA.Core.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System;
 
 namespace SpendCA.Infrastructure.Data
 {
@@ -42,16 +43,31 @@ namespace SpendCA.Infrastructure.Data
 
         }
 
-        public List<Spend> GetAll(int userId)
+        public List<Spend> GetAll(int userId, FilterModel filter)
         {
 
-            return _context
-                .Spends
-                .Include(x => x.Category)
-                .Where(x => x.UserId == userId)
-                .OrderByDescending(o => o.Date)
-                .ToList();
+            List<Spend> list;
 
+            if(filter.MinDate != DateTime.MinValue || filter.MaxDate != DateTime.MinValue)
+            {
+                list = _context
+                    .Spends
+                    .Include(x => x.Category)
+                    .Where(x => x.UserId == userId && x.Date > filter.MinDate && x.Date < filter.MaxDate)
+                    .OrderByDescending(o => o.Date)
+                    .ToList();
+            }
+            else
+            {
+                list = _context
+                    .Spends
+                    .Include(x => x.Category)
+                    .Where(x => x.UserId == userId)
+                    .OrderByDescending(o => o.Date)
+                    .ToList();
+            }
+
+            return list;
         }
 
         public Spend GetItem(int id)

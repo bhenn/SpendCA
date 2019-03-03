@@ -7,7 +7,7 @@ namespace SpendCA.Core.Interfaces
     public interface ISpendRepository
     {
 
-        List<Spend> GetAll(int userId);
+        List<Spend> GetAll(int userId, FilterModel filter);
         Spend GetItem(int id);
         Spend Add(Spend spend);
         Spend Delete(int id, int userId);

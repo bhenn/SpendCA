@@ -24,9 +24,9 @@ namespace SpendCA.Api.Controllers
 
         // GET api/spends
         [HttpGet]
-        public ActionResult<IList<Spend>> Get()
+        public ActionResult<IList<Spend>> Get([FromQuery] FilterModel filter)
         {
-            return _spendService.GetAll(GetUserId());
+            return _spendService.GetAll(GetUserId(), filter);
         }
 
         // POST api/values
