@@ -29,9 +29,9 @@ namespace SpendCA.Core.Services
             return _spendRepository.Delete(id, userId);
         }
 
-        public List<Spend> GetAll(int userId)
+        public List<Spend> GetAll(int userId, FilterModel filter)
         {
-            return _spendRepository.GetAll(userId);
+            return _spendRepository.GetAll(userId, filter);
         }
 
         public Spend GetItem(int id)

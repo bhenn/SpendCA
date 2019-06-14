@@ -49,7 +49,6 @@ namespace SpendCA.MVC.Controllers
             return View();
         }
 
-        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

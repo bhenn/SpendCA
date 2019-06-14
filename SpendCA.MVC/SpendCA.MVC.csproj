@@ -15,9 +15,13 @@
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Categories\" />
     <Folder Include="Views\Spends\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpendCA.Infrastructure\SpendCA.Infrastructure.csproj" />
     <ProjectReference Include="..\SpendCA.Core\SpendCA.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\css\site.min.css" />
   </ItemGroup>
 </Project>
