@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpendCA.Core.Entities;
 using SpendCA.Core.Interfaces;
+using SpendCA.MVC.Models;
 
 namespace SpendCA.MVC.Controllers
 {
@@ -19,10 +21,22 @@ namespace SpendCA.MVC.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(FilterModel filter)
         {
+            if (filter.MaxDate != DateTime.MinValue)
+                filter.MaxDate = filter.MaxDate.AddTicks(-1);
 
-            var spends = _spendService.GetAll(GetUserId());
+            var spends = _spendService.GetAll(GetUserId() , filter);
+
+            ViewBag.filter = filter;
+            ViewBag.total = (double)spends.Sum(x => x.Value) / 100;
+
+            ViewData["categoriesSummary"] = spends.GroupBy(x => x.CategoryId)
+                                                .Select(c => new CategoryViewModel()
+                                                {
+                                                    Category = c.First().Category.Description,
+                                                    Total = (double)c.Sum(s => s.Value) / 100
+                                                }).ToList();
 
             return View(spends);
         }

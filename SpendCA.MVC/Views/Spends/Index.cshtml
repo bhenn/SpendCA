@@ -27,6 +27,53 @@
         </div>
     </div>
     <div class="ibox-content">
+        <div class="ibox-content m-b-sm border-bottom">
+            @using (Html.BeginForm("Index", "Spends", FormMethod.Get))
+            {
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="col-form-label" for="minDate">Date min</label>
+                            <input type="text" class="form-control" id="minDate" name="minDate">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label class="col-form-label" for="maxDate">Date max</label>
+                            <input type="text" class="form-control" id="maxDate" name="maxDate">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <span class="input-group">
+                            <button type="submit" class="btn btn-primary">
+                                Search
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            }
+            <div class="row justify-content-end">
+                <div>
+                    <h2>Total: @ViewBag.total</h2>
+                </div>
+            </div>
+            <div class="row">
+                @foreach (var category in ViewData["categoriesSummary"] as List<CategoryViewModel>)
+                {
+                    <div class="col-lg-3">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>@category.Category</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins">@category.Total.ToString("c")</h1>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
 
         <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
             <thead>
@@ -80,4 +127,22 @@
 </div>
 
 
+@section Styles{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+}
 
+@section Scripts {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+
+    <script>
+        $('#minDate').datepicker({
+            autoclose: true
+        });
+
+        $('#maxDate').datepicker({
+            autoclose: true
+        });
+    </script>
+
+}

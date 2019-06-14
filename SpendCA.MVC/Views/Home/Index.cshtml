@@ -1,32 +1,26 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using SpendCA.Infrastructure.Data.Entities; 
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
+﻿@using SpendCA.Core.Entities
 
-<ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity"
-               asp-page="/Account/Manage/Index"
-               title="Manage">@User.Identity.Name</a>
-        </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout"
-                  asp-route-returnUrl="@Url.Page("/", new { area = "" })"
-                  method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-        </li>
-        
-    }
-    else
-    {
-        @*<li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>*@
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
-        </li>
-    }
-</ul>
+<div class="row white-bg page-heading">
+    <div class="col-lg-12">
+        <h2>@ViewBag.filter.MinDate.ToString("d") -- @ViewBag.filter.MaxDate.ToString("d")</h2>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content">
+    <div class="row">
+
+        @foreach (var category in ViewData["categoriesSummary"] as List<CategoryViewModel>)
+        {
+            <div class="col-lg-3">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>@category.Category</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@category.Total.ToString("c")</h1>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
