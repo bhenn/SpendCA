@@ -23,10 +23,14 @@ namespace SpendCA.MVC.Controllers
 
         public IActionResult Index(FilterModel filter)
         {
-            if (filter.MaxDate != DateTime.MinValue)
-                filter.MaxDate = filter.MaxDate.AddTicks(-1);
+            if (filter.MinDate == DateTime.MinValue)
+                filter.MinDate = DateTime.Now.AddDays(-30);
 
-            var spends = _spendService.GetAll(GetUserId() , filter);
+            if (filter.MaxDate == DateTime.MinValue)
+                filter.MaxDate = DateTime.Now;
+
+
+            var spends = _spendService.GetAll(GetUserId(), filter);
 
             ViewBag.filter = filter;
             ViewBag.total = (double)spends.Sum(x => x.Value) / 100;
@@ -36,7 +40,7 @@ namespace SpendCA.MVC.Controllers
                                                 {
                                                     Category = c.First().Category.Description,
                                                     Total = (double)c.Sum(s => s.Value) / 100
-                                                }).ToList();
+                                                }).OrderBy(o => o.Category).ToList();
 
             return View(spends);
         }
