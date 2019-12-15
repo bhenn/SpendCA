@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
@@ -22,24 +23,24 @@ namespace SpendCA.MVC.Controllers
         [Authorize]
         public IActionResult Index(FilterModel filter)
         {
-            //if (filter.MaxDate != DateTime.MinValue)
-            //filter.MaxDate = filter.MaxDate.AddTicks(-1);
-
-            //Whole month
-            filter.MinDate = new DateTime(DateTime.Now.Year,DateTime.Now.Month, 1);
-            filter.MaxDate = filter.MinDate.AddMonths(1).AddTicks(-1);
+            //Last 6 months
+            filter.MinDate = new DateTime(DateTime.Now.AddMonths(-5).Year, DateTime.Now.AddMonths(-5).Month, 1);
+            filter.MaxDate = DateTime.Now.AddDays(1);
 
             var spends = _spendService.GetAll(GetUserId(), filter);
+            var months = spends.GroupBy(x => x.Date.Month).Select(m => new MonthSummaryViewModel
+            {
+                MonthDescription = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m.Key),
+                MonthTotal = (double)m.Sum(s => s.Value) / 100,
+                Categories = m.GroupBy(c => c.CategoryId).Select(c => new CategoryViewModel()
+                {
+                    Category = c.First().Category.Description,
+                    Total = (double)c.Sum(s => s.Value) / 100
+                }).OrderBy(o => o.Category).ToList()
+            }).ToList();
 
-            ViewBag.filter = filter;
-            ViewBag.total = (double)spends.Sum(x => x.Value) / 100;
+            ViewData["monthsSummary"] = months;
 
-            ViewData["categoriesSummary"] = spends.GroupBy(x => x.CategoryId)
-                                                .Select(c => new CategoryViewModel()
-                                                {
-                                                    Category = c.First().Category.Description,
-                                                    Total = (double)c.Sum(s => s.Value) / 100
-                                                }).ToList();
 
             return View(spends);
         }

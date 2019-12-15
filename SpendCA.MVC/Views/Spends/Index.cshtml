@@ -34,13 +34,13 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label class="col-form-label" for="minDate">Date min</label>
-                            <input type="text" class="form-control" id="minDate" name="minDate">
+                            <input type="text" class="form-control" id="minDate" name="minDate" value="@(ViewBag.filter.MinDate?.ToShortDateString())">
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label class="col-form-label" for="maxDate">Date max</label>
-                            <input type="text" class="form-control" id="maxDate" name="maxDate">
+                            <input type="text" class="form-control" id="maxDate" name="maxDate" value="@(ViewBag.filter.MaxDate?.ToShortDateString())">
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -101,10 +101,10 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Date)
+                            @item.Date.ToShortDateString()
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Value)
+                            @((double)item.Value / 100)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Description)
