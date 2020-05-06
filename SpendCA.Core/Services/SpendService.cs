@@ -20,8 +20,8 @@ namespace SpendCA.Core.Services
         {
 
             spend.Date = SetDateToTwoPM(spend.Date);
-            // return _spendRepository.Add(spend);
-            return new Spend();
+            return _spendRepository.Add(spend);
+            
 
         }
 
