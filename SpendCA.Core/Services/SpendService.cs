@@ -20,7 +20,8 @@ namespace SpendCA.Core.Services
         {
 
             spend.Date = SetDateToTwoPM(spend.Date);
-            return _spendRepository.Add(spend);
+            // return _spendRepository.Add(spend);
+            return new Spend();
 
         }
 
@@ -50,7 +51,7 @@ namespace SpendCA.Core.Services
         {
             if (date == DateTime.MinValue)
                 date = DateTime.Now;
-                
+            
             return date.Date + new TimeSpan(14, 0, 0);
         }
 
