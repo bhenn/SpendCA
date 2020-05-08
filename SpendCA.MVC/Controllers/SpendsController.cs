@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpendCA.Core.Entities;
 using SpendCA.Core.Interfaces;
@@ -39,7 +40,8 @@ namespace SpendCA.MVC.Controllers
                                                 .Select(c => new CategoryViewModel()
                                                 {
                                                     Category = c.First().Category.Description,
-                                                    Total = (double)c.Sum(s => s.Value) / 100
+                                                    Total = (double)c.Sum(s => s.Value) / 100,
+                                                    Id = c.First().Category.Id
                                                 }).OrderBy(o => o.Category).ToList();
 
             return View(spends);

@@ -48,24 +48,16 @@ namespace SpendCA.Infrastructure.Data
 
             List<Spend> list;
 
+            IQueryable<Spend> query = _context.Spends.Include(x => x.Category).OrderByDescending(o => o.Date);
+            query = query.Where(x => x.UserId == userId);
+
             if(filter.MinDate != DateTime.MinValue || filter.MaxDate != DateTime.MinValue)
-            {
-                list = _context
-                    .Spends
-                    .Include(x => x.Category)
-                    .Where(x => x.UserId == userId && x.Date > filter.MinDate && x.Date < filter.MaxDate)
-                    .OrderByDescending(o => o.Date)
-                    .ToList();
-            }
-            else
-            {
-                list = _context
-                    .Spends
-                    .Include(x => x.Category)
-                    .Where(x => x.UserId == userId)
-                    .OrderByDescending(o => o.Date)
-                    .ToList();
-            }
+                query = query.Where(x => x.Date >= filter.MinDate && x.Date <= filter.MaxDate);
+
+            if (filter.SelectedCategories?.Count > 0)
+                query = query.Where(x => filter.SelectedCategories.Contains(x.CategoryId));
+
+            list = query.ToList();
 
             return list;
         }

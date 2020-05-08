@@ -9,6 +9,8 @@
     <Folder Include="Views\Categories\" />
     <Folder Include="Views\Spends\" />
     <Folder Include="Helpers\" />
+    <Folder Include="wwwroot\css\plugins\" />
+    <Folder Include="wwwroot\css\plugins\awesome-bootstrap-checkbox\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpendCA.Infrastructure\SpendCA.Infrastructure.csproj" />

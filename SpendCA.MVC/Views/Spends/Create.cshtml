@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group">
                     <label>Date</label>
-                    <input type="text" class="form-control" id="date" name="date">
+                    <input type="text" class="form-control" id="date" name="date" autocomplete="off" value="@DateTime.Now.ToShortDateString()">
                 </div>
                 <div class="form-group">
                     <label>Category</label>
@@ -46,7 +46,9 @@
 
     <script>
         $('#date').datepicker({
-            autoclose: true
+            autoclose: true,
+            todayHighlight: true,
+
         });
     </script>
 
