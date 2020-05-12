@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - .NET Core 2.1</title>
+    <title>@ViewData["Title"] - Spend CA</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- Add local styles, mostly for plugins css file -->
@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="~/css/animate.css" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
+    <link rel="stylesheet" href="~/css/custom.css" />
 </environment>
 <environment names="Staging,Production">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -23,6 +24,7 @@
     <link rel="stylesheet" href="~/css/animate.css" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" />
+    <link rel="stylesheet" href="~/css/custom.css" />
 </environment>
 
 
@@ -62,6 +64,7 @@
         <script src="~/lib/slimScroll/jquery.slimscroll.js"></script>
         <script src="~/lib/pace/pace.js"></script>
         <script src="~/js/script.js" asp-append-version="true"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
         <!-- Only for demo purpose -->
         <script src="~/js/skin.config.js"></script>
@@ -74,6 +77,7 @@
         <script src="~/lib/pace/pace.min.js"></script>
         <script src="~/lib/slimScroll/jquery.slimscroll.min.js"></script>
         <script src="~/js/script.js" asp-append-version="true"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     </environment>
 
     @RenderSection("scripts", required: false)

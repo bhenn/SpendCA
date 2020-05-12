@@ -1,0 +1,65 @@
+@using SpendCA.Core.Entities
+
+<div class="wrapper-content">
+    <div class="row">
+        <div class="col-10">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <canvas id="summaryChart" />
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="ibox">
+                <div class="ibox-title"><h5>Total</h5></div>
+                <div class="ibox-content text-right">
+                    @{
+                        double total = (double)ViewData["total"];
+                        <h2>@total.ToString("c")</h2>
+                    }
+                </div>
+            </div>
+            <div class="ibox">
+                <div class="ibox-title"><h5>Average</h5></div>
+                <div class="ibox-content text-right">
+                    @{
+                        double average = (double)ViewData["average"];
+                        <h2>@average.ToString("c")</h2>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+   <script>
+
+       var months = @Html.Raw(ViewData["monthsName"]);
+       var values = @Html.Raw(ViewData["monthsValues"]);
+       var categoryDescription = @Html.Raw(ViewData["categoryDescription"]);
+
+        var ctx = document.getElementById('summaryChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: months,
+                datasets: [{
+                    label: categoryDescription,
+                    backgroundColor: 'rgba(26,179,148,0.5)',
+                    pointBorderColor: '#FFF',
+                    data: values
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+
+    </script>
+
+}
