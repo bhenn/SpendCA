@@ -24,6 +24,20 @@ namespace SpendCA.MVC.Controllers
 
         public IActionResult Index(FilterModel filter)
         {
+
+            if (filter.MinDate == DateTime.MinValue){
+                if (filter.Month != 0 && filter.Year != 0){
+                    filter.MinDate = new DateTime(filter.Year, filter.Month, 1);
+                }
+            }
+
+            if (filter.MaxDate == DateTime.MinValue){
+                if (filter.Month != 0 && filter.Year != 0){
+                    filter.MaxDate = new DateTime(filter.Year, filter.Month,  1).AddMonths(1).AddDays(-1);
+                }
+            }
+
+
             if (filter.MinDate == DateTime.MinValue)
                 filter.MinDate = DateTime.Now.AddDays(-30);
 

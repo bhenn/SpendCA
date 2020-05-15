@@ -8,5 +8,7 @@ namespace SpendCA.Core.Entities
         public DateTime MinDate { get; set; }
         public DateTime MaxDate{ get; set; }
         public List<int> SelectedCategories { get; set; }
+        public int Year { get; set; }
+        public int Month { get; set; }
     }
 }

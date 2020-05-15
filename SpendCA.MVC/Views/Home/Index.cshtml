@@ -4,7 +4,7 @@
     @foreach (var month in ViewData["monthsSummary"] as List<MonthSummaryViewModel>)
     {
         <div class="ibox">
-            <div class="ibox-title">
+            <div class="ibox-title cursor-pointer" onclick="loadMonth(@month.Year, @month.Month)">
                 <div class="row">
                     <div class="col">
                         <h3>@month.MonthDescription - @month.MonthTotal.ToString("c")</h3>
@@ -39,6 +39,10 @@
         function loadSummaryByCategory(catId){
             window.location.href = '@Url.Action("SpendsByCategory", "Home")?SelectedCategories=' + catId;
             
+        }
+
+        function loadMonth(year, month){
+            window.location.href = '@Url.Action("Index", "Spends")?Year=' + year + '&Month=' + month;
         }
 
 
