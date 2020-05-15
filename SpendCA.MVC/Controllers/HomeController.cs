@@ -31,6 +31,8 @@ namespace SpendCA.MVC.Controllers
             var spends = _spendService.GetAll(GetUserId(), filter);
             var months = spends.GroupBy(x => x.Date.Month).Select(m => new MonthSummaryViewModel
             {
+                Year = m.First().Date.Year,
+                Month = m.First().Date.Month,
                 MonthDescription = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m.Key),
                 MonthTotal = (double)m.Sum(s => s.Value) / 100,
                 Categories = m.GroupBy(c => c.CategoryId).Select(c => new CategoryViewModel()

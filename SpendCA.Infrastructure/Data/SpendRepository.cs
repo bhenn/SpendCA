@@ -46,6 +46,14 @@ namespace SpendCA.Infrastructure.Data
         public List<Spend> GetAll(int userId, FilterModel filter)
         {
 
+
+            if (filter.MinDate != DateTime.MinValue)
+                filter.MinDate = filter.MinDate.Subtract(filter.MinDate.TimeOfDay);
+
+            if(filter.MaxDate != DateTime.MinValue)
+                filter.MaxDate = filter.MaxDate.AddDays(1).Subtract(filter.MaxDate.TimeOfDay).AddMilliseconds(-1);
+
+
             List<Spend> list;
 
             IQueryable<Spend> query = _context.Spends.Include(x => x.Category).OrderByDescending(o => o.Date);
