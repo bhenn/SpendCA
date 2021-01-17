@@ -11,16 +11,16 @@
                     </div>
                 </div>
             </div>
-            <div class="ibox-content">
+            <div class="ibox-content pb-0">
                 <div class="row">
                     @foreach (var category in month.Categories)
                     {
-                        <div class="col-lg-2">
-                            <div class="ibox">
+                        <div class="col-lg-1 pr-0">
+                            <div class="ibox mb-0">
                                 <div class="ibox-title cursor-pointer border-0" onclick="loadSummaryByCategory(@category.Id) ">
                                     <h5>@category.Category</h5>
                                 </div>
-                                <div class="ibox-content">
+                                <div class="ibox-content px-0 pt-2 text-center">
                                     <h3 class="no-margins">@category.Total.ToString("c")</h3>
                                 </div>
                             </div>
